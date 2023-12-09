@@ -17,15 +17,15 @@ from langchain.docstore.document import Document
 from langchain.vectorstores import Qdrant
 from langchain.llms import GooglePalm
 from langchain.chains import RetrievalQA
-import google.generativeai as palm
-
 
 
 qdrant_url = st.secrets["QDRANT_URL"]
 qdrant_api_key = st.secrets["QDRANT_API_KEY"]
 embeddings = HuggingFaceEmbeddings(model_name="sentence-transformers/all-mpnet-base-v2")
 palm_api_key = st.secrets["Palm_API_Key"]
-llm = GooglePalm(google_api_key=os.environ["Palm_API_Key"], temperature=0.3)
+#llm = GooglePalm(google_api_key=os.environ["Palm_API_Key"], temperature=0.3)
+llm = GooglePalm (google_api_key=os.environ["Palm_API_Key"], 
+                 temperature=0.3 )
 
 
 def main():
