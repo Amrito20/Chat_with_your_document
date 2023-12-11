@@ -151,7 +151,7 @@ def handel_userinput(user_question):
         response = result['result']
         source = result['source_documents'][0].metadata['source']
     st.session_state.chat_history.append(user_question)
-    st.session_state.chat_history.append(f"{response} \n Source Document: {source}")
+    st.session_state.chat_history.append(f"{response} \n Source document: {source}")
 
 
     # Layout of input/response containers
