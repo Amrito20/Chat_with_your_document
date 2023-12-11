@@ -2,12 +2,9 @@ import streamlit as st
 import os
 from PyPDF2 import PdfReader
 import docx
-from langchain.chat_models import ChatOpenAI
-from langchain.vectorstores import Qdrant
 import random
 from datetime import datetime
 from langchain import PromptTemplate
-from langchain.chains import RetrievalQA
 import string
 from dotenv import load_dotenv
 from langchain.embeddings import HuggingFaceEmbeddings
@@ -103,8 +100,8 @@ def get_text_chunks(text, filename):
     # spilit ito chuncks
     text_splitter = CharacterTextSplitter(
         separator="\n",
-        chunk_size=100,
-        chunk_overlap=50,
+        chunk_size=80,
+        chunk_overlap=20,
         length_function=len
     )
     chunks = text_splitter.split_text(text)
@@ -118,6 +115,7 @@ def get_text_chunks(text, filename):
 
 def get_vectorstore(text_chunks, COLLECTION_NAME):
     try:
+        # creating the Vectore Store using Facebook AI Semantic search
         knowledge_base = Qdrant.from_documents(
             documents = text_chunks,
             embedding = embeddings,
@@ -153,7 +151,7 @@ def handel_userinput(user_question):
         response = result['result']
         source = result['source_documents'][0].metadata['source']
     st.session_state.chat_history.append(user_question)
-    st.session_state.chat_history.append(f"{response}\n\n SOURCE DOCUMENT: {source} ") #\n Source Document: {source}
+    st.session_state.chat_history.append(f"{response} \n Source Document: {source}")
 
 
     # Layout of input/response containers
